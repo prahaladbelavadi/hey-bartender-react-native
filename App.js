@@ -13,10 +13,11 @@ import {
   View,
 } from "react-native";
 
+
 // Instruct SplashScreen not to hide yet, we want to do this manually
-SplashScreen.preventAutoHideAsync().catch(() => {
+SplashScreen.preventAutoHideAsync().catch( () => {
   /* reloading the app might trigger some race conditions, ignore them */
-});
+} );
 
 export default function App() {
   return (
@@ -26,18 +27,18 @@ export default function App() {
   );
 }
 
-function AnimatedAppLoader({ children, image }) {
-  const [isSplashReady, setSplashReady] = React.useState(false);
+function AnimatedAppLoader( { children, image } ) {
+  const [isSplashReady, setSplashReady] = React.useState( false );
 
   const startAsync = React.useMemo(
     // If you use a local image with require(...), use `Asset.fromModule`
-    () => () => Asset.fromURI(image).downloadAsync(),
+    () => () => Asset.fromURI( image ).downloadAsync(),
     [image]
   );
 
-  const onFinish = React.useMemo(() => setSplashReady(true), []);
+  const onFinish = React.useMemo( () => setSplashReady( true ), [] );
 
-  if (!isSplashReady) {
+  if ( !isSplashReady ) {
     return (
       <AppLoading
         // Instruct SplashScreen not to hide yet, we want to do this manually
@@ -52,34 +53,34 @@ function AnimatedAppLoader({ children, image }) {
   return <AnimatedSplashScreen image={image}>{children}</AnimatedSplashScreen>;
 }
 
-function AnimatedSplashScreen({ children, image }) {
-  const animation = React.useMemo(() => new Animated.Value(1), []);
-  const [isAppReady, setAppReady] = React.useState(false);
+function AnimatedSplashScreen( { children, image } ) {
+  const animation = React.useMemo( () => new Animated.Value( 1 ), [] );
+  const [isAppReady, setAppReady] = React.useState( false );
   const [isSplashAnimationComplete, setAnimationComplete] = React.useState(
     false
   );
 
-  React.useEffect(() => {
-    if (isAppReady) {
-      Animated.timing(animation, {
+  React.useEffect( () => {
+    if ( isAppReady ) {
+      Animated.timing( animation, {
         toValue: 0,
         duration: 200,
         useNativeDriver: true,
-      }).start(() => setAnimationComplete(true));
+      } ).start( () => setAnimationComplete( true ) );
     }
-  }, [isAppReady]);
+  }, [isAppReady] );
 
-  const onImageLoaded = React.useMemo(() => async () => {
+  const onImageLoaded = React.useMemo( () => async () => {
     try {
       await SplashScreen.hideAsync();
       // Load stuff
-      await Promise.all([]);
-    } catch (e) {
+      await Promise.all( [] );
+    } catch ( e ) {
       // handle errors
     } finally {
-      setAppReady(true);
+      setAppReady( true );
     }
-  });
+  } );
 
   return (
     <View style={{ flex: 1 }}>
@@ -118,7 +119,7 @@ function AnimatedSplashScreen({ children, image }) {
 
 function MainScreen() {
   function onReloadPress() {
-    if (Platform.OS === "web") {
+    if ( Platform.OS === "web" ) {
       location.reload();
     } else {
       Updates.reloadAsync();
@@ -131,20 +132,27 @@ function MainScreen() {
         flex: 1,
         backgroundColor: "plum",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "space-around",
+        // justifyContent: "space-between",
+        // justifyContent: "flex-start",
       }}
     >
+
       <Text
         style={{
           color: "black",
           fontSize: 30,
-          marginBottom: 15,
+          marginBottom: "100%",
           fontWeight: "bold",
+          backgroundColor: 'white'
         }}
       >
-        Pretty Cool!
+        Name of a drink
       </Text>
-      <Button title="Run Again" onPress={onReloadPress} />
+
+
+
+      <Button title="Hit me!" onPress={onReloadPress} style={{ bottom: 0 }} />
     </View>
   );
 }
