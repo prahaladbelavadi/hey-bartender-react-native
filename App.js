@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements';
+import axios from "axios";
 
 // import image from "./assets/orange.jpg";
 
@@ -74,6 +75,7 @@ function AnimatedSplashScreen( { children, image } ) {
     }
   }, [isAppReady] );
 
+
   const onImageLoaded = React.useMemo( () => async () => {
     try {
       await SplashScreen.hideAsync();
@@ -121,7 +123,47 @@ function AnimatedSplashScreen( { children, image } ) {
   );
 }
 
+
+
+
+
 function MainScreen() {
+  const [drink, setDrink] = React.useState( {} );
+  // const [ingredients, setIngredients] = React.useState( [] );
+
+
+  React.useEffect( () => {
+    fetchDrink();
+  }, [] );
+
+
+  const fetchDrink = () => {
+    axios.get( "https://www.thecocktaildb.com/api/json/v1/1/random.php" ).then( cuppa => {
+      const LogData = cuppa.data.drinks[0].strAlcoholic;
+
+      // console.log( JSON.stringify( LogData ) );
+
+      const propertiesOfDrink = Object.keys( cuppa.data.drinks[0] );
+      // console.log(propertiesOfDrink)
+      const ingredientsProps = propertiesOfDrink.filter( ( property ) => property.startsWith( "strIngredient" ) && cuppa.data.drinks[0][property] != null );
+      const ingredients = ingredientsProps.map( ( prop ) => cuppa.data.drinks[0][prop] );
+
+
+      setDrink(
+        {
+          url: cuppa.data.drinks[0].strDrinkThumb,
+          name: cuppa.data.drinks[0].strDrink,
+          type: cuppa.data.drinks[0].strAlcoholic,
+          ingredients
+        }
+      );
+    } ).catch( err => {
+      console.error( err );
+    } );
+
+  };
+
+
   function onReloadPress() {
     if ( Platform.OS === "web" ) {
       location.reload();
@@ -144,23 +186,31 @@ function MainScreen() {
 
       <Image
         // source={{ uri: image }}
-        source={{ uri: "https://www.thecocktaildb.com/images/media/drink/uyrpww1441246384.jpg" }}
+        source={{ uri: drink.url }}
         style={{ width: 200, height: 200 }}
       />
+      <Button title="Hit me!" onPress={onReloadPress} style={{ bottom: 0 }} />
+      <Text style={{
+        backgroundColor: "purple", fontSize: 20,
+        color: "black",
+      }}>
+        Name: {drink.name}
+        Type: {drink.type}
+      </Text>
       <Text
         style={{
           color: "black",
-          fontSize: 30,
           // marginBottom: "100%",
           fontWeight: "bold",
           backgroundColor: 'white'
         }}
       >
-        Name of a drink
+
+        {JSON.stringify( drink )}
+
       </Text>
 
 
-      <Button title="Hit me!" onPress={onReloadPress} style={{ bottom: 0 }} />
     </View>
   );
 }
