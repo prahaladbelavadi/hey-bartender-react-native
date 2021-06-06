@@ -12,6 +12,10 @@ import {
   Text,
   View,
 } from "react-native";
+import { ActivityIndicator } from 'react-native';
+import { Image } from 'react-native-elements';
+
+// import image from "./assets/orange.jpg";
 
 
 // Instruct SplashScreen not to hide yet, we want to do this manually
@@ -131,25 +135,29 @@ function MainScreen() {
       style={{
         flex: 1,
         backgroundColor: "plum",
-        alignItems: "center",
-        justifyContent: "space-around",
+        // alignItems: "center",
+        // justifyContent: "space-around",
         // justifyContent: "space-between",
         // justifyContent: "flex-start",
       }}
     >
 
+      <Image
+        // source={{ uri: image }}
+        source={{ uri: "https://www.thecocktaildb.com/images/media/drink/uyrpww1441246384.jpg" }}
+        style={{ width: 200, height: 200 }}
+      />
       <Text
         style={{
           color: "black",
           fontSize: 30,
-          marginBottom: "100%",
+          // marginBottom: "100%",
           fontWeight: "bold",
           backgroundColor: 'white'
         }}
       >
         Name of a drink
       </Text>
-
 
 
       <Button title="Hit me!" onPress={onReloadPress} style={{ bottom: 0 }} />
