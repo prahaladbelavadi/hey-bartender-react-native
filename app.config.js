@@ -3,7 +3,7 @@ export default {
     "./assets/logo.png",
   splash: {
     image:
-      "https://github.com/expo/expo/blob/master/templates/expo-template-blank/assets/splash.png?raw=true",
+      "./assets/splash-screen.png",
     resizeMode: "contain",
     backgroundColor: "#ffffff",
   },
