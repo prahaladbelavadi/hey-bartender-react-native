@@ -1,4 +1,5 @@
 export default {
+  "name": "hey-bartender",
   icon:
     "./assets/logo.png",
   splash: {
@@ -8,7 +9,8 @@ export default {
     backgroundColor: "#ffffff",
   },
   "android": {
-    "package": "com.prahaladbelavad.heybartender"
+    "package": "com.prahaladbelavad.heybartender",
+    "permissions": [],
   },
 
 };
