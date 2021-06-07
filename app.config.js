@@ -1,10 +1,9 @@
 export default {
-  "name": "hey-bartender",
   icon:
     "./assets/logo.png",
   splash: {
     image:
-      "./assets/splash-screen.png",
+    "./assets/splash-screen.png",
     resizeMode: "contain",
     backgroundColor: "#ffffff",
   },
