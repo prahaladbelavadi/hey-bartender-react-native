@@ -39,16 +39,19 @@ const MainScreen = () => {
       const propertiesOfDrink = Object.keys( cuppa.data.drinks[0] );
       // console.log(propertiesOfDrink)
       const ingredientsProps = propertiesOfDrink.filter( ( property ) => property.startsWith( "strIngredient" ) && cuppa.data.drinks[0][property] != null && cuppa.data.drinks[0][property] != "" );
-      const ingredientsMeasureProps = propertiesOfDrink.filter( ( property ) => property.startsWith( "strMeasure" ) && cuppa.data.drinks[0][property] != null && cuppa.data.drinks[0][property] != "");
+      const ingredientsMeasureProps = propertiesOfDrink.filter( ( property ) => property.startsWith( "strMeasure" ) && cuppa.data.drinks[0][property] != null && cuppa.data.drinks[0][property] != "" );
 
       const ingredients = ingredientsProps.map( ( prop ) => cuppa.data.drinks[0][prop] );
-      const measures = ingredientsMeasureProps.map((prop)=> cuppa.data.drinks[0][prop]);
+      const measures = ingredientsMeasureProps.map( ( prop ) => cuppa.data.drinks[0][prop] );
 
       setDrink(
         {
           url: cuppa.data.drinks[0].strDrinkThumb,
           name: cuppa.data.drinks[0].strDrink,
           type: cuppa.data.drinks[0].strAlcoholic,
+          category: cuppa.data.drinks[0].strCategory,
+          glass: cuppa.data.drinks[0].strGlass,
+          instructions: cuppa.data.drinks[0].strInstructions,
           ingredients, measures
         }
       );
@@ -102,14 +105,16 @@ const MainScreen = () => {
           style={{
             color: "yellow",
             fontStyle: "italic",
-            textAlign: "center",
             backgroundColor: '#16697A',
-            padding: 2
+            // padding: 2
+            textAlign: 'center',
+            marginTop: 6,
+            marginBottom: 6
+            // 
           }}
-        >
-          {drink.type}
-
+        > {drink.type} || {drink.category} || {drink.glass}
         </Text>
+
 
         {
           drink.ingredients &&
@@ -122,9 +127,24 @@ const MainScreen = () => {
             </ListItem>
           ) )
         }
+        <Text
+          style={{
+            color: "#009DAE",
+            fontStyle: "italic",
+            textAlign: "center",
+            backgroundColor: '#FFE652',
+            // padding: 2
+            marginTop: 4,
+            marginBottom: 2
+          }}
+        >
+          {drink.instructions}
+        </Text>
+
+
         <Divider style={{ height: 1, backgroundColor: "pink", paddingBottom: 4 }} />
         <Button
-          title="Hit me!" onPress={() => fetchDrink()} style={{ bottom: 0 }}
+          title="Hit me!" onPress={() => fetchDrink()} style={{ marginBottom: 6 }}
         />
 
       </ScrollView>
