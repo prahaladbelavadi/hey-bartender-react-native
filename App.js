@@ -38,16 +38,18 @@ const MainScreen = () => {
 
       const propertiesOfDrink = Object.keys( cuppa.data.drinks[0] );
       // console.log(propertiesOfDrink)
-      const ingredientsProps = propertiesOfDrink.filter( ( property ) => property.startsWith( "strIngredient" ) && cuppa.data.drinks[0][property] != null );
-      const ingredients = ingredientsProps.map( ( prop ) => cuppa.data.drinks[0][prop] );
+      const ingredientsProps = propertiesOfDrink.filter( ( property ) => property.startsWith( "strIngredient" ) && cuppa.data.drinks[0][property] != null && cuppa.data.drinks[0][property] != "" );
+      const ingredientsMeasureProps = propertiesOfDrink.filter( ( property ) => property.startsWith( "strMeasure" ) && cuppa.data.drinks[0][property] != null && cuppa.data.drinks[0][property] != "");
 
+      const ingredients = ingredientsProps.map( ( prop ) => cuppa.data.drinks[0][prop] );
+      const measures = ingredientsMeasureProps.map((prop)=> cuppa.data.drinks[0][prop]);
 
       setDrink(
         {
           url: cuppa.data.drinks[0].strDrinkThumb,
           name: cuppa.data.drinks[0].strDrink,
           type: cuppa.data.drinks[0].strAlcoholic,
-          ingredients
+          ingredients, measures
         }
       );
     } ).catch( err => {
@@ -115,7 +117,7 @@ const MainScreen = () => {
             <ListItem key={i} bottomDivider>
               <ListItem.Content>
                 <ListItem.Title>{l}</ListItem.Title>
-                <ListItem.Subtitle>{l}</ListItem.Subtitle>
+                <ListItem.Subtitle>{drink['measures'][i]}</ListItem.Subtitle>
               </ListItem.Content>
             </ListItem>
           ) )
