@@ -10,6 +10,6 @@ export default {
   "android": {
     "package": "com.prahaladbelavad.heybartender",
     "permissions": [],
-    "versionCode": 2
+    "versionCode": 3
   },
 };
